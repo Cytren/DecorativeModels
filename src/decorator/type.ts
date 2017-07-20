@@ -1,8 +1,11 @@
 
 import {PropertyType} from "../model/property-type";
+import {register} from "../processor/registry";
 
 export default function (type: PropertyType | string): PropertyDecorator {
-    return (target: Object, name: string) => {
-        console.log(`${name} - ${type}`);
+    return (target, propertyName) => {
+        register("type", (name, value) => {
+            return false;
+        });
     };
 }

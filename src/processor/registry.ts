@@ -1,21 +1,27 @@
 
 import Processor from "./processor";
 
-let processors = new Map<string, Processor[]>();
+interface Holder {
+    name: string;
+    priority: number;
+    processor: Processor;
+}
 
-export function register(name: string, processor: Processor) {
-    let processors = this.processors.get(name);
+let holders = new Map<string, Holder[]>();
 
-    if (processors == null) {
-        processors = [];
-        this.processors.set(name, processors);
+export function register(name: string, processor: Processor, priority: number = 10) {
+    let holders = this.holders.get(name);
+
+    if (holders == null) {
+        holders = [];
+        this.holders.set(name, holders);
     }
 
-    processors.forEach((other) => {
+    holders.forEach((other) => {
         if (other.name == processor.name) {
             throw new Error(`The decorator ${processor.name} is already defined on ${name}`);
         }
     });
 
-    processors.concat(processor);
+    holders.concat(processor);
 }
