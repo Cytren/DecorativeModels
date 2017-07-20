@@ -15,7 +15,7 @@ gulp.task("clean:package", function() {
 
 gulp.task("clean", sequence("clean:build", "clean:package"));
 
-gulp.task("build", function () {
+gulp.task("build", ["clean:build"], function () {
     var config = typescript.createProject("./tsconfig.json");
 
     return gulp
