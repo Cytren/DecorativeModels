@@ -1,6 +1,6 @@
 
 import Model from "../model/model";
 
-type Processor = (name: string, value: any, model: Model) => boolean;
+type Processor = (propertyName: string, propertyValue: any, model: Model) => boolean;
 
 export default Processor;

@@ -15,7 +15,7 @@ gulp.task("clean:package", function() {
 
 gulp.task("clean", sequence("clean:build", "clean:package"));
 
-gulp.task("build", ["clean:build"], function () {
+gulp.task("build", function () {
     var config = typescript.createProject("./tsconfig.json");
 
     return gulp
@@ -44,4 +44,4 @@ gulp.task("package:package.json", function () {
         .pipe(gulp.dest('package'));
 });
 
-gulp.task("package", sequence("clean", "build", "package:copy", "package:license", "package:package.json"));
+gulp.task("package", sequence("clean:package", "build", "package:copy", "package:license", "package:package.json"));
