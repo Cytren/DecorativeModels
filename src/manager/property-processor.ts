@@ -1,11 +1,11 @@
 
-import Processor from "./processor";
+import Validator from "./validator";
 
 interface PropertyProcessor {
     decoratorName: string;
     propertyName: string;
     priority: number;
-    process: Processor;
+    validate: Validator;
 }
 
 export default PropertyProcessor;

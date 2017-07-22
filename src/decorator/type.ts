@@ -1,6 +1,6 @@
 
 import {PropertyType} from "../model/property-type";
-import {register} from "../processor/registry";
+import {register} from "../manager/manager";
 
 export default function (type: PropertyType | string): PropertyDecorator {
     return (model, propertyName) => {

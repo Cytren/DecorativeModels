@@ -1,8 +1,8 @@
 
 import type from "./decorator/type";
 import length from "./decorator/length";
-import {process} from "./processor/registry";
+import {validate} from "./manager/manager";
 
 export {
-    type, length, process
+    type, length, validate
 };

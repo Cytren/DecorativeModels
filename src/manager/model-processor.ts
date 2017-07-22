@@ -20,10 +20,14 @@ export default class ModelProcessor {
         this.propertyProcessors.set(key, processor);
     }
 
-    process(model: Object) {
+    validate(model: Object): boolean {
         this.propertyProcessors.forEach((propertyProcessor) => {
             let propertyName = propertyProcessor.propertyName;
-            propertyProcessor.process(propertyName, model[propertyName], model);
+            let result = propertyProcessor.validate(propertyName, model[propertyName], model);
+
+            if (result) { return false; }
         });
+
+        return true;
     }
 }
