@@ -6,7 +6,8 @@ import PropertyProcessor from "./property-processor";
 export class Manager {
     readonly modelProcessors = new Map<string, ModelProcessor>();
 
-    register(model: Object, decoratorName: string, propertyName: string, validate: Validator, priority: number) {
+    register(model: Object, decoratorName: string, propertyName: string,
+             validate: Validator, priority: number = 10) {
         let modelName = model.constructor.name;
         let modelProcessor = this.modelProcessors.get(modelName);
 
@@ -31,13 +32,4 @@ export class Manager {
     }
 }
 
-let registry = new Manager();
-
-export function register(model: Object, decoratorName: string, propertyName: string,
-                         validate: Validator, priority: number = 10) {
-    registry.register(model, decoratorName, propertyName, validate, priority);
-}
-
-export function validate(model: Object): boolean {
-    return registry.validate(model);
-}
+export let manager = new Manager();
