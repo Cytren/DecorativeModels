@@ -1,6 +1,5 @@
 
 import PropertyProcessor from "./property-processor";
-import Model from "../model/model";
 
 export default class ModelProcessor {
     private propertyProcessors = new Map<string, PropertyProcessor>();
@@ -21,7 +20,7 @@ export default class ModelProcessor {
         this.propertyProcessors.set(key, processor);
     }
 
-    process(model: Model) {
+    process(model: Object) {
         this.propertyProcessors.forEach((propertyProcessor) => {
             let propertyName = propertyProcessor.propertyName;
             propertyProcessor.process(propertyName, model[propertyName], model);
