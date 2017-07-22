@@ -1,7 +1,6 @@
 
-import Validator from "./validator";
-import ModelProcessor from "./model-processor";
-import PropertyProcessor from "./property-processor";
+import {ModelProcessor} from "./model-processor";
+import {PropertyProcessor, Validator} from "./property-processor";
 
 export class Manager {
     readonly modelProcessors = new Map<string, ModelProcessor>();

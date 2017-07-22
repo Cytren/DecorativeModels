@@ -1,7 +1,7 @@
 
-import PropertyProcessor from "./property-processor";
+import {PropertyProcessor} from "./property-processor";
 
-export default class ModelProcessor {
+export class ModelProcessor {
     private propertyProcessors = new Map<string, PropertyProcessor>();
 
     constructor(readonly modelName: string) {}

@@ -1,11 +1,9 @@
 
-import Validator from "./validator";
+export type Validator = (propertyName: string, propertyValue: any, model: Object) => boolean;
 
-interface PropertyProcessor {
+export interface PropertyProcessor {
     decoratorName: string;
     propertyName: string;
     priority: number;
     validate: Validator;
 }
-
-export default PropertyProcessor;
