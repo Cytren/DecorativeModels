@@ -5,6 +5,7 @@ import {ModelOptions} from "../model/options";
 
 export class Manager {
     readonly modelProcessors = new Map<string, ModelProcessor>();
+    private globalOptions: ModelOptions = {};
 
     private getModelProcessor(model: Object): ModelProcessor {
         let modelName = model.constructor.name;
@@ -27,6 +28,10 @@ export class Manager {
 
     setOptions(model: Object, options: ModelOptions) {
         this.getModelProcessor(model).setOptions(options);
+    }
+
+    setGlobalOptions(options: ModelOptions) {
+        this.globalOptions = options;
     }
 }
 

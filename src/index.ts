@@ -1,11 +1,15 @@
 
 import {PropertyType} from "./model/property-type";
-import {ProcessMode} from "./model/options";
+import {ModelOptions, ProcessMode} from "./model/options";
 
 import {model} from "./decorator/model";
 import {type} from "./decorator/type";
 import {length} from "./decorator/length";
 import {manager} from "./manager/manager";
+
+function options(options: ModelOptions) {
+    manager.setGlobalOptions(options);
+}
 
 function validate(model: Object): boolean {
     return manager.validate(model);
@@ -13,6 +17,6 @@ function validate(model: Object): boolean {
 
 export {
     PropertyType, ProcessMode,
-    model,
+    model, options,
     type, length, validate
 }
