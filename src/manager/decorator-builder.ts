@@ -1,6 +1,7 @@
 
-import {PropertyProcessor, ValidateFunction} from "./property-processor";
+import {PropertyProcessor} from "./property-processor";
 import {ModelProcessor} from "./model-processor";
+import {ValidateFunction} from "./validate";
 
 export class DecoratorBuilder {
     private priorityValue = 10;

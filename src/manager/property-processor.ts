@@ -1,5 +1,5 @@
 
-export type ValidateFunction = (propertyName: string, propertyValue: any) => boolean;
+import {ValidateFunction} from "./validate";
 
 export interface PropertyProcessor {
     decoratorName: string;

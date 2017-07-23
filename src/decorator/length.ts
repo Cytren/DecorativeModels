@@ -14,8 +14,6 @@ export function length(min: number, max: number): PropertyDecorator {
             if (value.length > max) {
                 throw new Error(`The property ${propertyName} must contain no more than ${max} characters`);
             }
-
-            return true;
         })
         .create();
 }

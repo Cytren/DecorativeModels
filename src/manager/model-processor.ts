@@ -1,6 +1,7 @@
 
 import {PropertyProcessor} from "./property-processor";
 import {ModelOptions} from "../model/options";
+import {ValidateError} from "./validate";
 
 export class ModelProcessor {
     private propertyProcessors = new Map<string, PropertyProcessor>();
@@ -22,15 +23,23 @@ export class ModelProcessor {
         this.propertyProcessors.set(key, processor);
     }
 
-    validate(model: Object): boolean {
-        this.propertyProcessors.forEach((propertyProcessor) => {
+    validate(model: Object): ValidateError {
+
+        for (let propertyProcessor of Array.from(this.propertyProcessors.values())) {
             let propertyName = propertyProcessor.propertyName;
-            let result = propertyProcessor.validate(propertyName, model[propertyName]);
 
-            if (result) { return false; }
-        });
+            try {
+                propertyProcessor.validate(propertyName, model[propertyName]);
+            } catch (e) {
+                return {
+                    modelName: this.modelName,
+                    propertyName,
+                    errorMessage: e.message
+                };
+            }
+        }
 
-        return true;
+        return null;
     }
 
     setOptions(options: ModelOptions) {

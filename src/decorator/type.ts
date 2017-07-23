@@ -38,8 +38,6 @@ export function type(type: PropertyType | string): PropertyDecorator {
                 default:
                     throw new Error(`The type ${typeString} was not found.`);
             }
-
-            return true;
         })
         .create();
 }

@@ -14,8 +14,6 @@ export function range(min: number, max: number): PropertyDecorator {
             if (value > max) {
                 throw new Error(`The property ${propertyName} must be no larger than ${max}`);
             }
-
-            return true;
         })
         .create();
 }

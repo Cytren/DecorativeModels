@@ -2,6 +2,7 @@
 import {ModelProcessor} from "./model-processor";
 import {DecoratorBuilder} from "./decorator-builder";
 import {ModelOptions} from "../model/options";
+import {ValidateError} from "./validate";
 
 export class Manager {
     readonly modelProcessors = new Map<string, ModelProcessor>();
@@ -28,7 +29,7 @@ export class Manager {
         return new DecoratorBuilder(decoratorName, this.modelProcessors);
     }
 
-    validate(model: Object): boolean {
+    validate(model: Object): ValidateError {
         return this.getModelProcessor(model).validate(model);
     }
 
