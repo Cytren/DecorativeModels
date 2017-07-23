@@ -1,12 +1,12 @@
 
-import {PropertyProcessor, Validator} from "./property-processor";
+import {PropertyProcessor, ValidateFunction} from "./property-processor";
 import {ModelProcessor} from "./model-processor";
 
 export type ValidateWrapper = (propertyName: string, propertyValue: string) => boolean;
 
 export class DecoratorBuilder {
     private priorityValue = 10;
-    private validateValue: Validator;
+    private validateValue: ValidateFunction;
 
     constructor(readonly decoratorName: string,
                 readonly modelProcessors: Map<string, ModelProcessor>) {

@@ -1,6 +1,6 @@
 
 import {ModelProcessor} from "./model-processor";
-import {PropertyProcessor, Validator} from "./property-processor";
+import {PropertyProcessor, ValidateFunction} from "./property-processor";
 import {DecoratorBuilder} from "./decorator-builder";
 
 export class Manager {
