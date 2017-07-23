@@ -15,14 +15,35 @@ function options(options: ModelOptions) {
 
 function validate(model: Object): boolean;
 function validate(model: Object, result: ValidateResult);
+function validate(models: Object[]): boolean;
+function validate(models: Object[], result: ValidateResult);
 
-function validate(model: Object, result?: ValidateResult) {
-    let error = manager.validate(model);
+function validate(modelOrArray: Object[], resultOrNull?: ValidateResult) {
+    let models: Object[];
 
-    if (!result) {
-        return error == null;
+    if (Array.isArray(modelOrArray)) {
+        models = modelOrArray;
     } else {
-        result(error);
+        models = [modelOrArray];
+    }
+
+    for (let model of models) {
+        let error = manager.validate(model);
+
+        if (error != null) {
+            if (!resultOrNull) {
+                return false;
+            } else {
+                resultOrNull(error);
+                return;
+            }
+        }
+    }
+
+    if (!resultOrNull) {
+        return true;
+    } else {
+        resultOrNull(null);
     }
 }
 
