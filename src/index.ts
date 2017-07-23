@@ -2,7 +2,7 @@
 import {PropertyType} from "./model/property-type";
 import {ModelOptions, ProcessMode} from "./model/options";
 
-import {model} from "./decorator/model";
+import {model} from "./model/model";
 import {type} from "./decorator/type";
 import {length} from "./decorator/length";
 import {range} from "./decorator/range";

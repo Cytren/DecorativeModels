@@ -1,5 +1,5 @@
 
-import {ModelOptions} from "../model/options";
+import {ModelOptions} from "./options";
 import {manager} from "../manager/manager";
 
 export function model(options: ModelOptions): ClassDecorator {
