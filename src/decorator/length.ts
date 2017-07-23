@@ -8,11 +8,11 @@ export function length(min: number, max: number): PropertyDecorator {
             let value = <string> propertyValue;
 
             if (value.length < min) {
-                throw new Error(`The property ${propertyName} must contain at least ${min} characters`);
+                throw new Error(`Length of ${value.length} is too short, expected ${min} - ${max}`);
             }
 
             if (value.length > max) {
-                throw new Error(`The property ${propertyName} must contain no more than ${max} characters`);
+                throw new Error(`Length of ${value.length} is too long, expected ${min} - ${max}`);
             }
         })
         .create();

@@ -8,11 +8,11 @@ export function range(min: number, max: number): PropertyDecorator {
             let value = <number> propertyValue;
 
             if (value < min) {
-                throw new Error(`The property ${propertyName} must be no smaller than ${min}`);
+                throw new Error(`The value of ${propertyValue} is too small, expected ${min} - ${max}`);
             }
 
             if (value > max) {
-                throw new Error(`The property ${propertyName} must be no larger than ${max}`);
+                throw new Error(`The value of ${propertyValue} is too large, expected ${min} - ${max}`);
             }
         })
         .create();

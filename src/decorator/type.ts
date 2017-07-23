@@ -17,35 +17,35 @@ export function type(type: PropertyType | string): PropertyDecorator {
 
             switch (typeString) {
                 case "string":
-                    validate("string", "String", propertyName, propertyValue);
+                    validate("string", "String", propertyValue);
                     break;
 
                 case "float" || "number":
-                    validate("number", "Float", propertyName, propertyValue);
+                    validate("number", "Float", propertyValue);
                     break;
 
                 case "integer":
-                    validate("number", "Integer", propertyName, propertyValue);
+                    validate("number", "Integer", propertyValue);
                     let value = <number> propertyValue;
 
-                    if (!Number.isInteger(value)) { error(propertyName, "Integer"); }
+                    if (!Number.isInteger(value)) { error("Integer"); }
                     break;
 
                 case "boolean":
-                    validate("boolean", "Boolean", propertyName, propertyValue);
+                    validate("boolean", "Boolean", propertyValue);
                     break;
 
                 default:
-                    throw new Error(`The type ${typeString} was not found.`);
+                    throw new Error(`The type ${typeString} was not found`);
             }
         })
         .create();
 }
 
-function validate(type: string, typeName: string, propertyName: string, propertyValue: any) {
-    if (!(typeof propertyValue == type)) { error(propertyName, typeName); }
+function validate(type: string, typeName: string, propertyValue: any) {
+    if (!(typeof propertyValue == type)) { error(typeName); }
 }
 
-function error(propertyName: string, type: string) {
-    throw new Error(`The property ${propertyName} was not type ${type}`);
+function error(type: string) {
+    throw new Error(`The property is the wrong type, expected ${type}`);
 }
