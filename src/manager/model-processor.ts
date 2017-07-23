@@ -1,8 +1,10 @@
 
 import {PropertyProcessor} from "./property-processor";
+import {ModelOptions} from "../model/options";
 
 export class ModelProcessor {
     private propertyProcessors = new Map<string, PropertyProcessor>();
+    private modelOptions?: ModelOptions;
 
     constructor(readonly modelName: string) {}
 
@@ -29,5 +31,9 @@ export class ModelProcessor {
         });
 
         return true;
+    }
+
+    setOptions(options: ModelOptions) {
+        this.modelOptions = options;
     }
 }
