@@ -5,7 +5,7 @@ import {manager} from "../manager/manager";
 export function type(type: PropertyType | string): PropertyDecorator {
     return manager
         .register("type")
-        .priority(5)
+        .priority(0)
         .validate((propertyName, propertyValue) => {
             let typeString: string;
 
