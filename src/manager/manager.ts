@@ -7,10 +7,16 @@ export class Manager {
     readonly modelProcessors = new Map<string, ModelProcessor>();
     private globalOptions: ModelOptions = {};
 
-    private getModelProcessor(model: Object): ModelProcessor {
-        let modelName = model.constructor.name;
-        let modelProcessor = this.modelProcessors.get(model.constructor.name);
+    private getModelProcessor(modelOrName: string | Object): ModelProcessor {
+        let modelName: string;
 
+        if (typeof modelOrName == "string") {
+            modelName = <string> modelOrName;
+        } else {
+            modelName = (<Object> modelOrName).constructor.name;
+        }
+
+        let modelProcessor = this.modelProcessors.get(modelName);
         if (!modelProcessor) {
             throw new Error(`The model ${modelName} does not exist`);
         }
@@ -26,8 +32,8 @@ export class Manager {
         return this.getModelProcessor(model).validate(model);
     }
 
-    setOptions(model: Object, options: ModelOptions) {
-        this.getModelProcessor(model).setOptions(options);
+    setOptions(modelName: string, options: ModelOptions) {
+        this.getModelProcessor(modelName).setOptions(options);
     }
 
     setGlobalOptions(options: ModelOptions) {
