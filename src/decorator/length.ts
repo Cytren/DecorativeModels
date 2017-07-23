@@ -6,7 +6,6 @@ export function length(min: number, max: number): PropertyDecorator {
         .register("length")
         .priority(5)
         .validate((propertyName, propertyValue) => {
-            console.log(`@length(${min}, ${max}) ${propertyName} = ${propertyValue}`);
             return true;
         })
         .create();

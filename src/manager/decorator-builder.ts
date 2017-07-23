@@ -2,8 +2,6 @@
 import {PropertyProcessor, ValidateFunction} from "./property-processor";
 import {ModelProcessor} from "./model-processor";
 
-export type ValidateWrapper = (propertyName: string, propertyValue: string) => boolean;
-
 export class DecoratorBuilder {
     private priorityValue = 10;
     private validateValue: ValidateFunction;
@@ -17,7 +15,7 @@ export class DecoratorBuilder {
         return this;
     }
 
-    validate(validate: ValidateWrapper): DecoratorBuilder {
+    validate(validate: ValidateFunction): DecoratorBuilder {
         this.validateValue = validate;
         return this;
     }
