@@ -5,6 +5,7 @@ import {ModelOptions, ProcessMode} from "./model/options";
 import {model} from "./decorator/model";
 import {type} from "./decorator/type";
 import {length} from "./decorator/length";
+import {range} from "./decorator/range";
 import {manager} from "./manager/manager";
 
 function options(options: ModelOptions) {
@@ -17,6 +18,6 @@ function validate(model: Object): boolean {
 
 export {
     PropertyType, ProcessMode,
-    model, options,
-    type, length, validate
+    model, options, validate,
+    type, length, range
 }
