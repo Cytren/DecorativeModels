@@ -23,7 +23,7 @@ export class ModelProcessor {
     validate(model: Object): boolean {
         this.propertyProcessors.forEach((propertyProcessor) => {
             let propertyName = propertyProcessor.propertyName;
-            let result = propertyProcessor.validate(propertyName, model[propertyName], model);
+            let result = propertyProcessor.validate(propertyName, model[propertyName]);
 
             if (result) { return false; }
         });

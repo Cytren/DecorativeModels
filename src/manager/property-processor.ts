@@ -1,5 +1,5 @@
 
-export type Validator = (propertyName: string, propertyValue: any, model: Object) => boolean;
+export type Validator = (propertyName: string, propertyValue: any) => boolean;
 
 export interface PropertyProcessor {
     decoratorName: string;

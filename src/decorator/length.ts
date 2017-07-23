@@ -2,10 +2,12 @@
 import {manager} from "../manager/manager";
 
 export function length(min: number, max: number): PropertyDecorator {
-    return (model, propertyName) => {
-        manager.register(model, "length", propertyName.toString(), (name, value) => {
-            console.log(`@length(${min}, ${max}) ${model.constructor.name}.${propertyName}`);
-            return false;
-        });
-    };
+    return manager
+        .register("length")
+        .priority(5)
+        .validate((propertyName, propertyValue) => {
+            console.log(`@length(${min}, ${max}) ${propertyName} = ${propertyValue}`);
+            return true;
+        })
+        .create();
 }

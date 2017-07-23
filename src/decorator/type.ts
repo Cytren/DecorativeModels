@@ -3,10 +3,12 @@ import {PropertyType} from "../model/property-type";
 import {manager} from "../manager/manager";
 
 export function type(type: PropertyType | string): PropertyDecorator {
-    return (model, propertyName) => {
-        manager.register(model, "type", propertyName.toString(), (name, value) => {
-            console.log(`@type(${type}) ${model.constructor.name}.${propertyName}`);
-            return false;
-        });
-    };
+    return manager
+        .register("type")
+        .priority(5)
+        .validate((propertyName, propertyValue) => {
+            console.log(`@type(${type}) ${propertyName} = ${propertyValue}`);
+            return true;
+        })
+        .create();
 }
