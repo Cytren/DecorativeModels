@@ -1,5 +1,6 @@
 
 import {manager} from "../manager/manager";
+import {ModelProcessError} from "../model/process-error";
 
 export function length(min: number, max: number): PropertyDecorator {
     return manager
@@ -8,11 +9,11 @@ export function length(min: number, max: number): PropertyDecorator {
             let value = <string> propertyValue;
 
             if (value.length < min) {
-                throw new Error(`Length of ${value.length} is too short, expected ${min} - ${max}`);
+                throw new ModelProcessError(`Length of ${value.length} is too short, expected ${min} - ${max}`);
             }
 
             if (value.length > max) {
-                throw new Error(`Length of ${value.length} is too long, expected ${min} - ${max}`);
+                throw new ModelProcessError(`Length of ${value.length} is too long, expected ${min} - ${max}`);
             }
         })
         .create();

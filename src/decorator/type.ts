@@ -1,5 +1,6 @@
 
 import {manager} from "../manager/manager";
+import {ModelProcessError} from "../model/process-error";
 
 export function type(type: string): PropertyDecorator {
     return manager
@@ -27,7 +28,7 @@ export function type(type: string): PropertyDecorator {
                     break;
 
                 default:
-                    throw new Error(`The type ${type} was not found`);
+                    throw new ModelProcessError(`The type ${type} was not found`);
             }
         })
         .create();

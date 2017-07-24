@@ -2,6 +2,7 @@
 import {PropertyProcessor} from "./property-processor";
 import {ModelOptions} from "../model/options";
 import {ValidateError} from "./validate";
+import {ModelProcessError} from "../model/process-error";
 
 export class ModelProcessor {
     private propertyProcessors = new Map<string, PropertyProcessor>();
@@ -82,11 +83,15 @@ export class ModelProcessor {
             try {
                 propertyProcessor.validate(propertyName, model[propertyName]);
             } catch (e) {
-                return {
-                    modelName: this.modelName,
-                    propertyName,
-                    errorMessage: e.message
-                };
+                if (e instanceof ModelProcessError) {
+                    return {
+                        modelName: this.modelName,
+                        propertyName,
+                        errorMessage: e.message
+                    };
+                }
+
+                throw e;
             }
         }
 
