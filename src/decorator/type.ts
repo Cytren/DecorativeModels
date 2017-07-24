@@ -39,5 +39,5 @@ function validate(type: string, typeName: string, propertyValue: any) {
 }
 
 function error(type: string) {
-    throw new Error(`The property is the wrong type, expected ${type}`);
+    throw new ModelProcessError(`The property is the wrong type, expected ${type}`);
 }

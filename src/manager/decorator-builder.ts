@@ -28,6 +28,10 @@ export class DecoratorBuilder {
             let priority = this.priorityValue;
             let validate = this.validateValue;
 
+            if (!validate) {
+                validate = () => {};
+            }
+
             let modelProcessor = this.modelProcessors.get(modelName);
 
             if (!modelProcessor) {
