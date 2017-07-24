@@ -5,10 +5,14 @@ import {ModelOptions} from "../model/options";
 import {ValidateError} from "./validate";
 
 export class Manager {
-    readonly modelProcessors = new Map<string, ModelProcessor>();
-    private globalOptions: ModelOptions = {};
+    private globalOptions: ModelOptions = {
+        strictMode: true,
+        allowUndecorated: false
+    };
 
-    private getModelProcessor(modelOrName: string | Object): ModelProcessor {
+    readonly modelProcessors = new Map<string, ModelProcessor>();
+
+    getModelProcessor(modelOrName: string | Object, createIfNull = false): ModelProcessor {
         let modelName: string;
 
         if (typeof modelOrName == "string") {
@@ -19,7 +23,11 @@ export class Manager {
 
         let modelProcessor = this.modelProcessors.get(modelName);
         if (!modelProcessor) {
-            throw new Error(`The model ${modelName} does not exist`);
+            if (createIfNull) {
+                modelProcessor = new ModelProcessor(modelName);
+            } else {
+                throw new Error(`The model ${modelName} does not exist`);
+            }
         }
 
         return modelProcessor;
@@ -30,7 +38,7 @@ export class Manager {
     }
 
     validate(model: Object): ValidateError {
-        return this.getModelProcessor(model).validate(model);
+        return this.getModelProcessor(model).validate(model, this.globalOptions);
     }
 
     setOptions(modelName: string, options: ModelOptions) {

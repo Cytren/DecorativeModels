@@ -1,12 +1,14 @@
 
 import {PropertyType} from "./model/property-type";
-import {ModelOptions, ProcessMode} from "./model/options";
+import {ModelOptions} from "./model/options";
 import {ValidateResult} from "./manager/validate";
 
 import {model} from "./model/model";
 import {type} from "./decorator/type";
 import {length} from "./decorator/length";
 import {range} from "./decorator/range";
+import {nullable} from "./decorator/nullable";
+import {required} from "./decorator/required";
 import {manager} from "./manager/manager";
 
 function options(options: ModelOptions) {
@@ -48,7 +50,8 @@ function validate(modelOrArray: Object[], resultOrNull?: ValidateResult) {
 }
 
 export {
-    PropertyType, ProcessMode,
+    PropertyType,
     model, options, validate,
-    type, length, range
+    type, length, range,
+    nullable, required
 }

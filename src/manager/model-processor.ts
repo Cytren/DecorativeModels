@@ -5,12 +5,21 @@ import {ValidateError} from "./validate";
 
 export class ModelProcessor {
     private propertyProcessors = new Map<string, PropertyProcessor>();
+    private decoratedProperties = new Set<string>();
     private modelOptions?: ModelOptions;
 
     constructor(readonly modelName: string) {}
 
     private static getKey(decoratorName: string, propertyName: string): string {
         return `${decoratorName}-${propertyName}`;
+    }
+
+    hasDecorator(propertyName: string, decoratorName?: string): boolean {
+        if (!decoratorName) {
+            return this.decoratedProperties.has(propertyName);
+        }
+
+        return this.propertyProcessors.get(ModelProcessor.getKey(decoratorName, propertyName)) != null;
     }
 
     register(decoratorName: string, propertyName: string, processor: PropertyProcessor) {
@@ -21,9 +30,51 @@ export class ModelProcessor {
         }
 
         this.propertyProcessors.set(key, processor);
+        this.decoratedProperties.add(propertyName);
     }
 
-    validate(model: Object): ValidateError {
+    validate(model: Object, globalOptions: ModelOptions): ValidateError {
+        let options: ModelOptions;
+
+        if (this.modelOptions != null) {
+            options = this.modelOptions;
+        } else {
+            options = globalOptions;
+        }
+
+        if (!options.allowUndecorated) {
+            for (let property in model) {
+                if (!this.hasDecorator(property)) {
+                    return {
+                        modelName: this.modelName,
+                        propertyName: property,
+                        errorMessage: "Undecorated properties not allowed"
+                    };
+                }
+            }
+        }
+
+        for (let property of Array.from(this.decoratedProperties)) {
+            if (model[property] == null) {
+                if (options.strictMode == undefined || options.strictMode) {
+                    if (!this.hasDecorator(property, "nullable")) {
+                        return {
+                            modelName: this.modelName,
+                            propertyName: property,
+                            errorMessage: "Property was not defined"
+                        };
+                    }
+                } else {
+                    if (this.hasDecorator(property, "required")) {
+                        return {
+                            modelName: this.modelName,
+                            propertyName: property,
+                            errorMessage: "Property was not defined"
+                        };
+                    }
+                }
+            }
+        }
 
         for (let propertyProcessor of Array.from(this.propertyProcessors.values())) {
             let propertyName = propertyProcessor.propertyName;
