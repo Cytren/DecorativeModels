@@ -1,5 +1,4 @@
 
-import {PropertyType} from "./model/property-type";
 import {ModelOptions} from "./model/options";
 import {ValidateResult} from "./manager/validate";
 
@@ -50,7 +49,6 @@ function validate(modelOrArray: Object[], resultOrNull?: ValidateResult) {
 }
 
 export {
-    PropertyType,
     model, options, validate,
     type, length, range,
     nullable, required

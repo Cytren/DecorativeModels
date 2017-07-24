@@ -1,21 +1,12 @@
 
-import {PropertyType} from "../model/property-type";
 import {manager} from "../manager/manager";
 
-export function type(type: PropertyType | string): PropertyDecorator {
+export function type(type: string): PropertyDecorator {
     return manager
         .register("type")
         .priority(0)
         .validate((propertyName, propertyValue) => {
-            let typeString: string;
-
-            if (typeof type == "number") {
-                typeString = PropertyType[type].toLowerCase();
-            } else {
-                typeString = type;
-            }
-
-            switch (typeString) {
+            switch (type) {
                 case "string":
                     validate("string", "String", propertyValue);
                     break;
@@ -36,7 +27,7 @@ export function type(type: PropertyType | string): PropertyDecorator {
                     break;
 
                 default:
-                    throw new Error(`The type ${typeString} was not found`);
+                    throw new Error(`The type ${type} was not found`);
             }
         })
         .create();
