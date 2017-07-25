@@ -1,6 +1,6 @@
 
 import {manager} from "../manager/manager";
-import {ModelProcessError} from "../model/process-error";
+import {ModelProcessError} from "../error/model-process-error";
 
 export function range(min: number, max: number): PropertyDecorator {
     return manager

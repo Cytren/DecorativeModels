@@ -1,6 +1,6 @@
 
 import {manager} from "../manager/manager";
-import {ModelProcessError} from "../model/process-error";
+import {ModelProcessError} from "../error/model-process-error";
 
 export function type(type: string): PropertyDecorator {
     return manager
