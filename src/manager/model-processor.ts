@@ -88,6 +88,10 @@ export class ModelProcessor {
         for (let propertyProcessor of orderedProperties) {
             let propertyName = propertyProcessor.propertyName;
 
+            if (model[propertyName] == null) {
+                continue;
+            }
+
             try {
                 propertyProcessor.validate(propertyName, model[propertyName]);
             } catch (e) {
