@@ -24,6 +24,11 @@ export class ModelProcessor {
     }
 
     register(decoratorName: string, propertyName: string, processor: PropertyProcessor) {
+        if ((decoratorName === "nullable" && this.hasDecorator(propertyName, "required")) ||
+            (decoratorName === "required" && this.hasDecorator(propertyName, "nullable"))) {
+            throw new Error(`The property on ${this.modelName}.${propertyName} cannot be nullable and required.`);
+        }
+
         let key = ModelProcessor.getKey(decoratorName, propertyName);
 
         if (this.propertyProcessors.has(key)) {
