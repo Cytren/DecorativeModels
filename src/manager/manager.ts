@@ -37,8 +37,11 @@ export class Manager {
         return new DecoratorBuilder(decoratorName, this.modelProcessors);
     }
 
-    validate(model: Object): ValidateError {
-        return this.getModelProcessor(model).validate(model, this.globalOptions);
+    validate(model: Object, modelName?: string): ValidateError {
+        let modelProcessor = modelName ? this.getModelProcessor(modelName) :
+            this.getModelProcessor(model);
+
+        return modelProcessor.validate(model, this.globalOptions);
     }
 
     setOptions(modelName: string, options: ModelOptions) {

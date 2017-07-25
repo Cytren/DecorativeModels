@@ -15,12 +15,21 @@ function options(options: ModelOptions) {
 }
 
 function validate(model: Object): boolean;
+function validate(model: Object, modelName: string): boolean;
 function validate(model: Object, result: ValidateResult);
-function validate(models: Object[]): boolean;
-function validate(models: Object[], result: ValidateResult);
+function validate(model: Object, modelName: string, result: ValidateResult);
 
-function validate(modelOrArray: Object[], resultOrNull?: ValidateResult) {
+function validate(models: Object[]): boolean;
+function validate(models: Object[], modelName: string): boolean;
+function validate(models: Object[], result: ValidateResult);
+function validate(models: Object[], modelName: string, result: ValidateResult);
+
+function validate(modelOrArray: Object | Object[],
+                  modelNameOrResult?: string | ValidateResult,
+                  resultOrNull?: ValidateResult): boolean | void {
     let models: Object[];
+    let modelName: string;
+    let validateResult: ValidateResult;
 
     if (Array.isArray(modelOrArray)) {
         models = modelOrArray;
@@ -28,25 +37,70 @@ function validate(modelOrArray: Object[], resultOrNull?: ValidateResult) {
         models = [modelOrArray];
     }
 
+    if (modelNameOrResult) {
+        if (typeof modelNameOrResult == "string") {
+            modelName = <string> modelNameOrResult;
+        } else {
+            validateResult = <ValidateResult> modelNameOrResult;
+        }
+    }
+
+    if (resultOrNull) {
+        if (validateResult && resultOrNull) {
+            throw new Error("Result is already defined.");
+        }
+
+        validateResult = resultOrNull;
+    }
+
     for (let model of models) {
-        let error = manager.validate(model);
+        let error = manager.validate(model, modelName);
 
         if (error != null) {
-            if (!resultOrNull) {
+            if (!validateResult) {
                 return false;
             } else {
-                resultOrNull(error);
+                validateResult(error);
                 return;
             }
         }
     }
 
-    if (!resultOrNull) {
+    if (!validateResult) {
         return true;
     } else {
-        resultOrNull(null);
+        validateResult(null);
     }
 }
+
+// function validate(modelOrArray: Object[], modelName?: string, resultOrNull?: ValidateResult) {
+//     let models: Object[];
+//
+//     if (Array.isArray(modelOrArray)) {
+//         models = modelOrArray;
+//     } else {
+//         models = [modelOrArray];
+//     }
+//
+//     for (let model of models) {
+//         let error = manager.validate(model);
+//
+//         if (error != null) {
+//             if (!resultOrNull) {
+//                 return false;
+//             } else {
+//                 resultOrNull(error);
+//                 return;
+//             }
+//         }
+//     }
+//
+//     if (!resultOrNull) {
+//         return true;
+//     } else {
+//         resultOrNull(null);
+//     }
+// }
 
 export {
     model, options, validate,
