@@ -73,35 +73,6 @@ function validate(modelOrArray: Object | Object[],
     }
 }
 
-// function validate(modelOrArray: Object[], modelName?: string, resultOrNull?: ValidateResult) {
-//     let models: Object[];
-//
-//     if (Array.isArray(modelOrArray)) {
-//         models = modelOrArray;
-//     } else {
-//         models = [modelOrArray];
-//     }
-//
-//     for (let model of models) {
-//         let error = manager.validate(model);
-//
-//         if (error != null) {
-//             if (!resultOrNull) {
-//                 return false;
-//             } else {
-//                 resultOrNull(error);
-//                 return;
-//             }
-//         }
-//     }
-//
-//     if (!resultOrNull) {
-//         return true;
-//     } else {
-//         resultOrNull(null);
-//     }
-// }
-
 export {
     model, options, validate,
     type, length, range,
