@@ -44,4 +44,4 @@ gulp.task("package:package.json", function () {
         .pipe(gulp.dest('package'));
 });
 
-gulp.task("package", sequence("clean:package", "build", "package:copy", "package:license", "package:package.json"));
+gulp.task("package", sequence("clean", "build", "package:copy", "package:license", "package:package.json"));
