@@ -77,7 +77,10 @@ export class ModelProcessor {
             }
         }
 
-        for (let propertyProcessor of Array.from(this.propertyProcessors.values())) {
+        let orderedProperties = Array.from(this.propertyProcessors.values());
+        orderedProperties.sort((a, b) => a.priority - b.priority);
+
+        for (let propertyProcessor of orderedProperties) {
             let propertyName = propertyProcessor.propertyName;
 
             try {
