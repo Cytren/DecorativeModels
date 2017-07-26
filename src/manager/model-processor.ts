@@ -52,33 +52,21 @@ export class ModelProcessor {
         if (!options.allowUndecorated) {
             for (let property in model) {
                 if (!this.hasDecorator(property)) {
-                    return {
-                        modelName: this.modelName,
-                        propertyName: property,
-                        errorMessage: "Undecorated properties not allowed"
-                    };
+                    return this.error(property, "Undecorated properties not allowed");
                 }
             }
         }
 
         for (let property of Array.from(this.decoratedProperties)) {
-            if (model[property] == null) {
-                if (options.strictMode == undefined || options.strictMode) {
-                    if (!this.hasDecorator(property, "nullable")) {
-                        return {
-                            modelName: this.modelName,
-                            propertyName: property,
-                            errorMessage: "Property was not defined"
-                        };
-                    }
-                } else {
-                    if (this.hasDecorator(property, "required")) {
-                        return {
-                            modelName: this.modelName,
-                            propertyName: property,
-                            errorMessage: "Property was not defined"
-                        };
-                    }
+            if (model[property] != null) { continue; }
+
+            if (options.strictMode == undefined || options.strictMode) {
+                if (!this.hasDecorator(property, "nullable")) {
+                    return this.error(property, "Property was not defined");
+                }
+            } else {
+                if (this.hasDecorator(property, "required")) {
+                    return this.error(property, "Property was not defined");
                 }
             }
         }
@@ -97,11 +85,7 @@ export class ModelProcessor {
                 propertyProcessor.validate(propertyName, model[propertyName]);
             } catch (e) {
                 if (e instanceof ModelProcessError) {
-                    return {
-                        modelName: this.modelName,
-                        propertyName,
-                        errorMessage: e.message
-                    };
+                    this.error(propertyName, e.message);
                 }
 
                 throw e;
@@ -109,6 +93,14 @@ export class ModelProcessor {
         }
 
         return null;
+    }
+
+    error(propertyName: string, error: string): ValidateError {
+        return {
+            modelName: this.modelName,
+            propertyName: propertyName,
+            errorMessage: error
+        };
     }
 
     setOptions(options: ModelOptions) {
