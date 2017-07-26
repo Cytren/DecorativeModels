@@ -29,7 +29,7 @@ gulp.task("watch", function () {
 });
 
 gulp.task("package:copy", function () {
-    return gulp.src('build/**/*')
+    return gulp.src('build/main/**/*')
         .pipe(gulp.dest('package'));
 });
 
