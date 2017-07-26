@@ -1,43 +1,60 @@
 
 import {manager} from "../manager/manager";
-import {ModelProcessError} from "../error/model-process-error";
+import {ValidateError} from "../manager/validate";
 
 export function type(type: string): PropertyDecorator {
     return manager
         .register("type")
         .priority(0)
-        .validate((propertyName, propertyValue) => {
+        .validate((propertyName, propertyValue, modelName) => {
+            let errorMessage: string;
+
             switch (type) {
                 case "string":
-                    validate("string", "String", propertyValue);
+                    errorMessage = validate("string", "String", propertyValue);
                     break;
 
                 case "float" || "number":
-                    validate("number", "Float", propertyValue);
+                    errorMessage = validate("number", "Float", propertyValue);
                     break;
 
                 case "integer":
-                    validate("number", "Integer", propertyValue);
+                    errorMessage = validate("number", "Integer", propertyValue);
                     let value = <number> propertyValue;
 
-                    if (!Number.isInteger(value)) { error("Integer"); }
+                    if (!Number.isInteger(value)) { errorMessage = error("Integer"); }
                     break;
 
                 case "boolean":
-                    validate("boolean", "Boolean", propertyValue);
+                    errorMessage = validate("boolean", "Boolean", propertyValue);
                     break;
 
                 default:
-                    throw new ModelProcessError(`The type ${type} was not found`);
+                    return validateModel(type, propertyName, propertyValue, modelName);
+            }
+
+            if (errorMessage) {
+                return new ValidateError(modelName, propertyName, errorMessage);
             }
         })
         .create();
 }
 
-function validate(type: string, typeName: string, propertyValue: any) {
-    if (!(typeof propertyValue == type)) { error(typeName); }
+function error(type: string) {
+    return `The property is the wrong type, expected ${type}`;
 }
 
-function error(type: string) {
-    throw new ModelProcessError(`The property is the wrong type, expected ${type}`);
+function validate(type: string, typeName: string, propertyValue: any) {
+    return !(typeof propertyValue == type) ? error(typeName) : null;
+}
+
+function validateModel(type: string, propertyName: string, propertyValue: any, modelName: string) {
+    let modelError: ValidateError = manager.validate(propertyValue, type);
+
+    if (modelError) {
+        modelError.modelName = modelName;
+        modelError.propertyName = propertyName + "." + modelError.propertyName;
+
+        return modelError;
+    }
 }

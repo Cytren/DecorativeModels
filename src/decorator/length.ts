@@ -1,19 +1,21 @@
 
 import {manager} from "../manager/manager";
-import {ModelProcessError} from "../error/model-process-error";
+import {ValidateError} from "../manager/validate";
 
 export function length(min: number, max: number): PropertyDecorator {
     return manager
         .register("length")
-        .validate((propertyName, propertyValue) => {
+        .validate((propertyName, propertyValue, modelName) => {
             let value = <string> propertyValue;
 
             if (value.length < min) {
-                throw new ModelProcessError(`Length of ${value.length} is too short, expected ${min} - ${max}`);
+                return new ValidateError(modelName, propertyName,
+                    `Length of ${value.length} is too short, expected ${min} - ${max}`);
             }
 
             if (value.length > max) {
-                throw new ModelProcessError(`Length of ${value.length} is too long, expected ${min} - ${max}`);
+                return new ValidateError(modelName, propertyName,
+                    `Length of ${value.length} is too long, expected ${min} - ${max}`);
             }
         })
         .create();

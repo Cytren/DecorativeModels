@@ -2,8 +2,6 @@
 import {PropertyProcessor} from "./property-processor";
 import {ModelOptions} from "../model/options";
 import {ValidateError} from "./validate";
-import {ModelProcessError} from "../error/model-process-error";
-import {ModelRegistrationError} from "../error/model-registration-error";
 
 export class ModelProcessor {
     private propertyProcessors = new Map<string, PropertyProcessor>();
@@ -27,13 +25,13 @@ export class ModelProcessor {
     register(decoratorName: string, propertyName: string, processor: PropertyProcessor) {
         if ((decoratorName === "nullable" && this.hasDecorator(propertyName, "required")) ||
             (decoratorName === "required" && this.hasDecorator(propertyName, "nullable"))) {
-            throw new ModelRegistrationError(`The property on ${this.modelName}.${propertyName} cannot be nullable and required.`);
+            throw new Error(`The property on ${this.modelName}.${propertyName} cannot be nullable and required.`);
         }
 
         let key = ModelProcessor.getKey(decoratorName, propertyName);
 
         if (this.propertyProcessors.has(key)) {
-            throw new ModelRegistrationError(`The decorator ${decoratorName} is already defined on ${this.modelName}.${propertyName}`);
+            throw new Error(`The decorator ${decoratorName} is already defined on ${this.modelName}.${propertyName}`);
         }
 
         this.propertyProcessors.set(key, processor);
@@ -81,15 +79,10 @@ export class ModelProcessor {
                 continue;
             }
 
-            try {
-                propertyProcessor.validate(propertyName, model[propertyName]);
-            } catch (e) {
-                if (e instanceof ModelProcessError) {
-                    this.error(propertyName, e.message);
-                }
+            let error = propertyProcessor.validate(propertyName,
+                model[propertyName], this.modelName);
 
-                throw e;
-            }
+            if (error) { return error; }
         }
 
         return null;
