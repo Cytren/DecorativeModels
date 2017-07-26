@@ -82,18 +82,21 @@ export class ModelProcessor {
             let error = propertyProcessor.validate(propertyName,
                 model[propertyName], this.modelName);
 
-            if (error) { return error; }
+            if (error) {
+                if (typeof error == "string") {
+                    return new ValidateError(this.modelName, propertyName,
+                        `${propertyName}.${error}`);
+                } else {
+                    return error;
+                }
+            }
         }
 
         return null;
     }
 
     error(propertyName: string, error: string): ValidateError {
-        return {
-            modelName: this.modelName,
-            propertyName: propertyName,
-            errorMessage: error
-        };
+        return new ValidateError(this.modelName, propertyName, error);
     }
 
     setOptions(options: ModelOptions) {

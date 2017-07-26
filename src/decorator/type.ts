@@ -7,34 +7,26 @@ export function type(type: string): PropertyDecorator {
         .register("type")
         .priority(0)
         .validate((propertyName, propertyValue, modelName) => {
-            let errorMessage: string;
-
             switch (type) {
                 case "string":
-                    errorMessage = validate("string", "String", propertyValue);
-                    break;
+                    return validate("string", "String", propertyValue);
 
                 case "float" || "number":
-                    errorMessage = validate("number", "Float", propertyValue);
-                    break;
+                    return validate("number", "Float", propertyValue);
 
                 case "integer":
-                    errorMessage = validate("number", "Integer", propertyValue);
-                    let value = <number> propertyValue;
+                    let result = validate("number", "Integer", propertyValue);
+                    if (result) { return result; }
 
-                    if (!Number.isInteger(value)) { errorMessage = error("Integer"); }
+                    let value = <number> propertyValue;
+                    if (!Number.isInteger(value)) { return error("Integer"); }
                     break;
 
                 case "boolean":
-                    errorMessage = validate("boolean", "Boolean", propertyValue);
-                    break;
+                    return validate("boolean", "Boolean", propertyValue);
 
                 default:
                     return validateModel(type, propertyName, propertyValue, modelName);
-            }
-
-            if (errorMessage) {
-                return new ValidateError(modelName, propertyName, errorMessage);
             }
         })
         .create();
@@ -49,12 +41,15 @@ function validate(type: string, typeName: string, propertyValue: any) {
 }
 
 function validateModel(type: string, propertyName: string, propertyValue: any, modelName: string) {
-    let modelError: ValidateError = manager.validate(propertyValue, type);
+    let error: ValidateError = manager.validate(propertyValue, type);
+    if (!error) { return; }
 
-    if (modelError) {
-        modelError.modelName = modelName;
-        modelError.propertyName = propertyName + "." + modelError.propertyName;
+    if (typeof error == "string") {
+        return new ValidateError(modelName, propertyName, `${propertyName}.${error}`);
+    } else {
+        error.modelName = modelName;
+        error.propertyName = `${propertyName}.${error.propertyName}`;
 
-        return modelError;
+        return error;
     }
 }

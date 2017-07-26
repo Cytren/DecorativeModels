@@ -6,4 +6,4 @@ export class ValidateError {
 }
 
 export type ValidateResult = (error?: ValidateError) => void;
-export type ValidateFunction = (propertyName: string, propertyValue: any, modelName: string) => void | ValidateError;
+export type ValidateFunction = (propertyName: string, propertyValue: any, modelName: string) => void | string | ValidateError;
