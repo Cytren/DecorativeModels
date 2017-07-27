@@ -15,7 +15,7 @@ gulp.task("clean:package", function() {
 
 gulp.task("clean", sequence("clean:build", "clean:package"));
 
-gulp.task("build", function () {
+gulp.task("build:typescript", function () {
     var config = typescript.createProject("./tsconfig.json");
 
     return gulp
@@ -25,7 +25,7 @@ gulp.task("build", function () {
 });
 
 gulp.task("watch", function () {
-    gulp.watch("src/**/*.ts", ["build"]);
+    gulp.watch("src/**/*.ts", ["build:typescript"]);
 });
 
 gulp.task("package:copy", function () {
@@ -44,4 +44,5 @@ gulp.task("package:package.json", function () {
         .pipe(gulp.dest('package'));
 });
 
+gulp.task("build", sequence("clean:build", "build:typescript"));
 gulp.task("package", sequence("clean", "build", "package:copy", "package:license", "package:package.json"));
