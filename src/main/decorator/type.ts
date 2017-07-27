@@ -8,6 +8,9 @@ export function type(type: string): PropertyDecorator {
         .priority(0)
         .validate((propertyName, propertyValue, modelName) => {
             switch (type) {
+                case "any":
+                    return;
+
                 case "string":
                     return validate("string", "String", propertyValue);
 

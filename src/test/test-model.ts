@@ -2,51 +2,47 @@
 import {assert, expect} from "chai";
 import {validate, type} from "../main/index";
 
-describe("Simple Model", () => {
-    class User {
+describe("Model", () => {
+    class Model {
         @type("integer") id: number;
-        @type("string") firstName: string;
-        @type("string") lastName: string;
+        @type("string") name: string;
     }
 
-    it("Should NOT validate an empty User instance", () => {
-        let user = new User();
-        assert(!validate(user));
+    it("should NOT validate an empty model instance", () => {
+        let model = new Model();
+        assert(!validate(model));
     });
 
-    it("Should validate a populated User instance", () => {
-        let user = new User();
-        user.id = 123456789;
-        user.firstName = "FIRST NAME";
-        user.lastName = "LAST NAME";
+    it("should validate a populated model instance", () => {
+        let model = new Model();
+        model.id = 123456789;
+        model.name = "NAME";
 
-        assert(validate(user));
+        assert(validate(model));
     });
 
-    it("Should NOT validate an empty Object instance", () => {
-        let user = {};
-        assert(!validate(user, "User"));
+    it("should NOT validate an empty object instance", () => {
+        let model = {};
+        assert(!validate(model, "Model"));
     });
 
-    it("Should validate a populated Object instance", () => {
-        let user = {
+    it("should validate a populated object instance", () => {
+        let model = {
             id: 123456789,
-            firstName: "FIRST NAME",
-            lastName: "LAST NAME"
+            name: "NAME"
         };
 
-        assert(validate(user, "User"));
+        assert(validate(model, "Model"));
     });
 
-    it("Should NOT validate a populated Object instance without an explicit type", () => {
-        let user = {
+    it("should NOT validate a populated object instance without an explicit type", () => {
+        let model = {
             id: 123456789,
-            firstName: "FIRST NAME",
-            lastName: "LAST NAME"
+            name: "NAME"
         };
 
         expect(() => {
-            validate(user)
+            validate(model)
         }).to.throw("The model Object does not exist");
     });
 });
