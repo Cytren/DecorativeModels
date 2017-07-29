@@ -36,6 +36,8 @@ function run(type: string, propertyName: string, propertyValue: any, modelName: 
         default:
             if (type.startsWith("Array<") && type.endsWith(">")) {
                 return validateArray(type, propertyName, propertyValue, modelName);
+            } else if (type.startsWith("Set<") && type.endsWith(">")) {
+                return validateSet(type, propertyName, propertyValue, modelName);
             }
 
             return validateModel(type, propertyName, propertyValue, modelName);
@@ -55,6 +57,18 @@ function validateArray(type: string, propertyName: string, propertyValue: any, m
     let subType = type.substr(6, type.length - 7);
 
     for (let value of propertyValue) {
+        let result = run(subType, propertyName, value, modelName);
+        if (result) { return result; }
+    }
+
+    return;
+}
+
+function validateSet(type: string, propertyName: string, propertyValue: any, modelName: string) {
+    if (!(propertyValue instanceof Set)) { return error(type); }
+    let subType = type.substr(4, type.length - 5);
+
+    for (let value of Array.from(propertyValue.values())) {
         let result = run(subType, propertyName, value, modelName);
         if (result) { return result; }
     }

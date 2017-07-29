@@ -6,6 +6,7 @@ import testFloat from "../type/float";
 import testString from "../type/string";
 import testModel from "../type/model";
 import testArray from "../type/array";
+import testSet from "../type/set";
 
 export default function() {
     testAny();
@@ -15,4 +16,5 @@ export default function() {
     testString();
     testModel();
     testArray();
+    testSet();
 }
