@@ -1,10 +1,10 @@
 
-import testModel from "./model/test-model";
-import testType from "./decorator/test-type";
-import testLength from "./decorator/test-length";
-import testRange from "./decorator/test-range";
-import testNullable from "./decorator/test-nullable";
-import testRequired from "./decorator/test-required";
+import testModel from "./model/model";
+import testType from "./decorator/type";
+import testLength from "./decorator/length";
+import testRange from "./decorator/range";
+import testNullable from "./decorator/nullable";
+import testRequired from "./decorator/required";
 
 describe("[Model]", () => {
     testModel();
