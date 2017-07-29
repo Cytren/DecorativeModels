@@ -2,7 +2,7 @@
 import {assert} from "chai";
 import {validate, type, nullable} from "../../main/index";
 
-describe("[Nullable Decorator]", () => {
+export default function() {
     describe("Model with a non-nullable property", () => {
         class NullableModelOne {
             @type("any") property: any;
@@ -36,4 +36,4 @@ describe("[Nullable Decorator]", () => {
             assert.equal(validate(model), true);
         });
     });
-});
+}

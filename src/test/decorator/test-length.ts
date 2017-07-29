@@ -2,7 +2,7 @@
 import {assert} from "chai";
 import {validate, type, length} from "../../main/index";
 
-describe("[Length Decorator]", () => {
+export default function() {
     describe("Model with a length 2 - 5 property", () => {
         class LengthModel {
             @type("string")
@@ -34,4 +34,4 @@ describe("[Length Decorator]", () => {
             assert.equal(validate(model), false);
         });
     });
-});
+}

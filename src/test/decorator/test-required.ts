@@ -2,7 +2,7 @@
 import {assert} from "chai";
 import {model, validate, type, required} from "../../main/index";
 
-describe("[Required Decorator]", () => {
+export default function() {
     describe("Model with a non-required property", () => {
         @model({ strictMode: false })
         class RequiredModelOne {
@@ -38,4 +38,4 @@ describe("[Required Decorator]", () => {
             assert.equal(validate(model), true);
         });
     });
-});
+}

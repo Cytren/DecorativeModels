@@ -1,8 +1,8 @@
 
 import {assert, expect} from "chai";
-import {validate, type} from "../main/index";
+import {validate, type} from "../../main/index";
 
-describe("Model", () => {
+export default function() {
     class Model {
         @type("integer") id: number;
         @type("string") name: string;
@@ -45,4 +45,4 @@ describe("Model", () => {
             validate(model)
         }).to.throw("The model Object does not exist");
     });
-});
+}

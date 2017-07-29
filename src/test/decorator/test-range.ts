@@ -2,7 +2,7 @@
 import {assert} from "chai";
 import {validate, type, range} from "../../main/index";
 
-describe("[Range Decorator]", () => {
+export default function() {
     describe("Model with a range 2 - 5 property", () => {
         class RangeModel {
             @type("float")
@@ -34,4 +34,4 @@ describe("[Range Decorator]", () => {
             assert.equal(validate(model), false);
         });
     });
-});
+}
