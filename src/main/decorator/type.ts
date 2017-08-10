@@ -34,9 +34,9 @@ function run(type: string, propertyName: string, propertyValue: any, modelName: 
             return validate("boolean", "Boolean", propertyValue);
 
         default:
-            if (type.startsWith("Array<") && type.endsWith(">")) {
+            if (type.startsWith("[") && type.endsWith("]")) {
                 return validateArray(type, propertyName, propertyValue, modelName);
-            } else if (type.startsWith("Set<") && type.endsWith(">")) {
+            } else if (type.startsWith("<") && type.endsWith(">")) {
                 return validateSet(type, propertyName, propertyValue, modelName);
             }
 
@@ -54,7 +54,7 @@ function validate(type: string, typeName: string, propertyValue: any) {
 
 function validateArray(type: string, propertyName: string, propertyValue: any, modelName: string) {
     if (!Array.isArray(propertyValue)) { return error(type); }
-    let subType = type.substr(6, type.length - 7);
+    let subType = type.substring(1, type.length - 1);
 
     for (let value of propertyValue) {
         let result = run(subType, propertyName, value, modelName);
@@ -66,7 +66,7 @@ function validateArray(type: string, propertyName: string, propertyValue: any, m
 
 function validateSet(type: string, propertyName: string, propertyValue: any, modelName: string) {
     if (!(propertyValue instanceof Set)) { return error(type); }
-    let subType = type.substr(4, type.length - 5);
+    let subType = type.substring(1, type.length - 1);
 
     for (let value of Array.from(propertyValue.values())) {
         let result = run(subType, propertyName, value, modelName);

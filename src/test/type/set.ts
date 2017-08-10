@@ -5,7 +5,7 @@ import {validate, type} from "../../main/index";
 export default function () {
     describe("Model with a string set property", () => {
         class StringSetModel {
-            @type("Set<string>") property: any;
+            @type("<string>") property: any;
         }
 
         it("should NOT validate with an undefined property", () => {
