@@ -45,7 +45,7 @@ export class Manager {
     }
 
     setOptions(modelName: string, options: ModelOptions) {
-        this.getModelProcessor(modelName).setOptions(options);
+        this.getModelProcessor(modelName, true).setOptions(options);
     }
 
     setGlobalOptions(options: ModelOptions) {
