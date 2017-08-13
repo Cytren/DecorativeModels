@@ -5,6 +5,7 @@ import testLength from "./decorator/length";
 import testRange from "./decorator/range";
 import testNullable from "./decorator/nullable";
 import testRequired from "./decorator/required";
+import testMatch from "./decorator/match";
 
 describe("[Model]", () => {
     testModel();
@@ -28,4 +29,8 @@ describe("[Nullable Decorator]", () => {
 
 describe("[Required Decorator]", () => {
     testRequired();
+});
+
+describe("[Match Decorator]", () => {
+    testMatch();
 });
