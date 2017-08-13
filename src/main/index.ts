@@ -10,6 +10,8 @@ import {nullable} from "./decorator/nullable";
 import {required} from "./decorator/required";
 import {manager} from "./manager/manager";
 
+import "./extension/string";
+
 function options(options: ModelOptions) {
     manager.setGlobalOptions(options);
 }

@@ -20,16 +20,9 @@ export default function() {
             assert.equal(validate(model), true);
         });
 
-        it("should validate with an integer property", () => {
+        it("should validate with a number property", () => {
             let model = new AnyModel();
             model.property = 123;
-
-            assert.equal(validate(model), true);
-        });
-
-        it("should validate with an float property", () => {
-            let model = new AnyModel();
-            model.property = 123.45;
 
             assert.equal(validate(model), true);
         });

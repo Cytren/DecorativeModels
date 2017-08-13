@@ -24,16 +24,9 @@ export default function() {
             assert.equal(validate(model), false);
         });
 
-        it("should NOT validate with an integer property", () => {
+        it("should NOT validate with a number property", () => {
             let model = new ParentModel();
             model.property = 123;
-
-            assert.equal(validate(model), false);
-        });
-
-        it("should NOT validate with an float property", () => {
-            let model = new ParentModel();
-            model.property = 123.45;
 
             assert.equal(validate(model), false);
         });
