@@ -6,7 +6,7 @@ export function match(...strings: string[]): PropertyDecorator;
 
 export function match(... args: any[]): PropertyDecorator {
     return manager
-        .register("length")
+        .register("match")
         .validate((propertyName, propertyValue) => {
 
             if (args.length == 1 && args[0] instanceof RegExp) {

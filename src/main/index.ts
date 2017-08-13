@@ -9,6 +9,7 @@ import {range} from "./decorator/range";
 import {nullable} from "./decorator/nullable";
 import {required} from "./decorator/required";
 import {match} from "./decorator/match";
+import {count} from "./decorator/count";
 import {manager} from "./manager/manager";
 
 import "./extension/string";
@@ -79,5 +80,6 @@ function validate(modelOrArray: Object | Object[],
 export {
     model, options, validate,
     type, length, range,
-    nullable, required, match
+    nullable, required, match,
+    count
 }
