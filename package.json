@@ -1,6 +1,6 @@
 {
   "name": "decorative-models",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Decorative models for TypeScript",
   "main": "build/main/index.js",
   "types": "build/main/index.d.ts",
