@@ -38,6 +38,11 @@ gulp.task('package:license', function() {
         .pipe(gulp.dest('package'));
 });
 
+gulp.task('package:readme', function() {
+    return gulp.src('./README.md')
+        .pipe(gulp.dest('package'));
+});
+
 gulp.task("package:package.json", function () {
     return gulp.src('package.json')
         .pipe(json({ 'main': 'index.js', 'types': 'index.d.ts' }))
@@ -45,4 +50,6 @@ gulp.task("package:package.json", function () {
 });
 
 gulp.task("build", sequence("clean:build", "build:typescript"));
-gulp.task("package", sequence("clean", "build", "package:copy", "package:license", "package:package.json"));
+
+gulp.task("package", sequence("clean", "build", "package:copy",
+    "package:license", "package:readme", "package:package.json"));
