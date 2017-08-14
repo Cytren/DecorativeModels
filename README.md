@@ -183,7 +183,7 @@ validate(myModel, (error) => {
     if (!error) {
         console.log("It Validated!");
     } else {
-        console.log(`Error Validating!`);
+        console.log("Error Validating!");
         console.log(`${error.modelName}.${error.propertyName}`);
         console.log(error.errorMessage);
     }
