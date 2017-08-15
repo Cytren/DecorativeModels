@@ -3,6 +3,11 @@ Decorative models is an easy to use runtime model validation library for TypeScr
 It is most useful for validating client requests in node for model conformity, but
 can be used for any runtime validation.
 
+## Installation
+```
+npm install --save decorative-models
+```
+
 ## Example
 ```
 import {type, length, validate} from "decorative-models";
@@ -34,11 +39,11 @@ let processOptions = {
 };
 ```
 
-#####```strictMode: boolean```  
+##### ```strictMode: boolean```  
 ```true```: properties are NOT allowed to be null, unless decorated with @nullable  
 ```false```: properties are allowed to be null, unless decorated with @required
 
-#####```allowUndecorated: boolean```
+##### ```allowUndecorated: boolean```
 Should a model validate with un-decorated properties?
 
 ### Setting on a Model
@@ -227,3 +232,27 @@ console.log(validate(model2, "MyModel"));   // true
 One important thing to note however, is that in order for the conformity validation
 to register, at least one instance of the class must be created. In this case, if the
 model1 instance had not have been created first, the model2 validation would fail.
+
+## Contribution
+If you find Decorative Models useful and would like to contribute to the development,
+then please read on.
+
+### Development Environment
+Setting up the development environment requires minimal effort. First, make sure you
+have the latest version of node installed.
+
+#### Downloading
+```
+git clone https://github.com/Cytren/DecorativeModels.git decorative-models
+```
+
+#### Installing Required Libraries
+```
+cd decorative-models
+npm install
+```
+
+#### Running Tests
+```
+npm run test
+```
