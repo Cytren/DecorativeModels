@@ -45,7 +45,11 @@ gulp.task('package:readme', function() {
 
 gulp.task("package:package.json", function () {
     return gulp.src('package.json')
-        .pipe(json({ 'main': 'index.js', 'types': 'index.d.ts' }))
+        .pipe(json({
+            'main': 'index.js',
+            'types': 'index.d.ts',
+            'private': false
+        }))
         .pipe(gulp.dest('package'));
 });
 
