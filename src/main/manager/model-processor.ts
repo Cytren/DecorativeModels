@@ -87,7 +87,7 @@ export class ModelProcessor {
             if (error) {
                 if (typeof error == "string") {
                     return new ValidateError(this.modelName, propertyName,
-                        `${propertyName}.${error}`);
+                        error);
                 } else {
                     return error;
                 }
