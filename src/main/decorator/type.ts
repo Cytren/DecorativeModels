@@ -22,28 +22,28 @@ function run(type: EntityType, propertyName: string, propertyValue: any, modelNa
                 return;
 
             case PrimitiveType.String:
-                return validate("string", "String", propertyValue);
+                return validate("string", "string", propertyValue);
 
             case PrimitiveType.Float:
-                return validate("number", "Float", propertyValue);
+                return validate("number", "float", propertyValue);
 
             case PrimitiveType.Boolean:
-                return validate("boolean", "Boolean", propertyValue);
+                return validate("boolean", "boolean", propertyValue);
 
             case PrimitiveType.Integer:
-                let integerResult = validate("number", "Integer", propertyValue);
+                let integerResult = validate("number", "integer", propertyValue);
                 if (integerResult) { return integerResult; }
 
                 let integerValue = <number> propertyValue;
-                if (!Number.isInteger(integerValue)) { return error("Integer"); }
+                if (!Number.isInteger(integerValue)) { return error("integer"); }
                 return;
 
             case PrimitiveType.Character:
-                let characterResult = validate("string", "Character", propertyValue);
+                let characterResult = validate("string", "character", propertyValue);
                 if (characterResult) { return characterResult; }
 
                 let stringValue = <string> propertyValue;
-                if (stringValue.length != 1) { return error("Character"); }
+                if (stringValue.length != 1) { return error("character"); }
                 return;
         }
 
