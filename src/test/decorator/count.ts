@@ -13,37 +13,37 @@ export default function() {
         it("should NOT validate with an array with count of 1", () => {
             let model = new CountModel();
             model.value = ["S"];
-            assert.equal(validate(model), false);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should validate with an array with count of 2", () => {
             let model = new CountModel();
             model.value = ["S", "T"];
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should validate with an array with count of 5", () => {
             let model = new CountModel();
             model.value = ["S", "T", "R", "I", "N"];
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should NOT validate with an array with count of 6", () => {
             let model = new CountModel();
             model.value = ["S", "T", "R", "I", "N", "G"];
-            assert.equal(validate(model), false);
+            validate(model).then(error => assert.isNotNull(error)).catch(() => {});
         });
 
         it("should validate with a set with count of 5", () => {
             let model = new CountModel();
             model.value = new Set(["S", "T", "R", "I", "N"]);
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should NOT validate with a set with count of 6", () => {
             let model = new CountModel();
             model.value = new Set(["S", "T", "R", "I", "N", "G"]);
-            assert.equal(validate(model), false);
+            validate(model).then(error => assert.isNotNull(error)).catch(() => {});
         });
 
         it("should validate with a map with count of 5", () => {
@@ -57,7 +57,7 @@ export default function() {
                 ["N", "N"]
             ]);
 
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should NOT validate with a map with count of 6", () => {
@@ -72,7 +72,7 @@ export default function() {
                 ["G", "G"]
             ]);
 
-            assert.equal(validate(model), false);
+            validate(model).then(error => assert.isNotNull(error)).catch(() => {});
         });
     });
 }

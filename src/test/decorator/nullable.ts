@@ -10,13 +10,13 @@ export default function() {
 
         it("should NOT validate with a null property", () => {
             let model = new NullableModelOne();
-            assert.equal(validate(model), false);
+            validate(model).then(error => assert.isNotNull(error)).catch(() => {});
         });
 
         it("should validate with an assigned property", () => {
             let model = new NullableModelOne();
             model.property = "STRING";
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
     });
 
@@ -27,13 +27,13 @@ export default function() {
 
         it("should validate with a null property", () => {
             let model = new NullableModelTwo();
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should validate with an assigned property", () => {
             let model = new NullableModelTwo();
             model.property = "STRING";
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
     });
 }

@@ -11,13 +11,13 @@ export default function() {
 
         it("should validate with a null property", () => {
             let model = new RequiredModelOne();
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should validate with an assigned property", () => {
             let model = new RequiredModelOne();
             model.property = "STRING";
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
     });
 
@@ -29,13 +29,13 @@ export default function() {
 
         it("should NOT validate with a null property", () => {
             let model = new RequiredModelTwo();
-            assert.equal(validate(model), false);
+            validate(model).then(error => assert.isNotNull(error)).catch(() => {});
         });
 
         it("should validate with an assigned property", () => {
             let model = new RequiredModelTwo();
             model.property = "STRING";
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
     });
 }

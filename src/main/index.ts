@@ -1,6 +1,6 @@
 
 import {ModelOptions} from "./model/options";
-import {ValidateResult} from "./manager/validate";
+import {ValidateError} from "./manager/validate";
 
 import {model} from "./model/model";
 import {type} from "./decorator/type";
@@ -18,63 +18,33 @@ function options(options: ModelOptions) {
     manager.setGlobalOptions(options);
 }
 
-function validate(model: Object): boolean;
-function validate(model: Object, modelName: string): boolean;
-function validate(model: Object, result: ValidateResult);
-function validate(model: Object, modelName: string, result: ValidateResult);
+function validate(modelOrArray: Object | Object[], modelType?: Function): Promise<ValidateError> {
+    return new Promise((resolve) => {
 
-function validate(models: Object[]): boolean;
-function validate(models: Object[], modelName: string): boolean;
-function validate(models: Object[], result: ValidateResult);
-function validate(models: Object[], modelName: string, result: ValidateResult);
+        let models: Object[];
+        let modelName: string;
 
-function validate(modelOrArray: Object | Object[],
-                  modelNameOrResult?: string | ValidateResult,
-                  resultOrNull?: ValidateResult): boolean | void {
-    let models: Object[];
-    let modelName: string;
-    let validateResult: ValidateResult;
-
-    if (Array.isArray(modelOrArray)) {
-        models = modelOrArray;
-    } else {
-        models = [modelOrArray];
-    }
-
-    if (modelNameOrResult) {
-        if (typeof modelNameOrResult == "string") {
-            modelName = <string> modelNameOrResult;
+        if (Array.isArray(modelOrArray)) {
+            models = modelOrArray;
         } else {
-            validateResult = <ValidateResult> modelNameOrResult;
-        }
-    }
-
-    if (resultOrNull) {
-        if (validateResult && resultOrNull) {
-            throw new Error("Result is already defined.");
+            models = [modelOrArray];
         }
 
-        validateResult = resultOrNull;
-    }
+        if (modelType) {
+            modelName = modelType.name;
+        }
 
-    for (let model of models) {
-        let error = manager.validate(model, modelName);
+        for (let model of models) {
+            let error = manager.validate(model, modelName);
 
-        if (error != null) {
-            if (!validateResult) {
-                return false;
-            } else {
-                validateResult(error);
+            if (error != null) {
+                resolve(error);
                 return;
             }
         }
-    }
 
-    if (!validateResult) {
-        return true;
-    } else {
-        validateResult(null);
-    }
+        resolve(null);
+    });
 }
 
 export {
