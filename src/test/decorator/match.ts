@@ -13,25 +13,25 @@ export default function() {
         it("should validate with an empty string", () => {
             let model = new MatchRegexModel();
             model.value = "";
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should validate with string 'test'", () => {
             let model = new MatchRegexModel();
             model.value = "test";
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should NOT validate with string 'TEST'", () => {
             let model = new MatchRegexModel();
             model.value = "TEST";
-            assert.equal(validate(model), false);
+            validate(model).then(error => assert.isNotNull(error)).catch(() => {});
         });
 
         it("should NOT validate with string '123'", () => {
             let model = new MatchRegexModel();
             model.value = "123";
-            assert.equal(validate(model), false);
+            validate(model).then(error => assert.isNotNull(error)).catch(() => {});
         });
     });
 
@@ -45,31 +45,31 @@ export default function() {
         it("should NOT validate with an empty string", () => {
             let model = new MatchStringsModel();
             model.value = "";
-            assert.equal(validate(model), false);
+            validate(model).then(error => assert.isNotNull(error)).catch(() => {});
         });
 
         it("should validate with string 'test'", () => {
             let model = new MatchStringsModel();
             model.value = "test";
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should validate with string 'TEST'", () => {
             let model = new MatchStringsModel();
             model.value = "TEST";
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should validate with string '123'", () => {
             let model = new MatchStringsModel();
             model.value = "123";
-            assert.equal(validate(model), true);
+            validate(model).then(error => assert.isNull(error)).catch(() => {});
         });
 
         it("should NOT validate with string 'testing'", () => {
             let model = new MatchStringsModel();
             model.value = "testing";
-            assert.equal(validate(model), false);
+            validate(model).then(error => assert.isNotNull(error)).catch(() => {});
         });
     });
 }

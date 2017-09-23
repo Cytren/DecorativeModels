@@ -1,5 +1,5 @@
 
-import {assert, expect} from "chai";
+import {assert} from "chai";
 import {validate, type} from "../../main/index";
 
 export default function() {
@@ -10,7 +10,7 @@ export default function() {
 
     it("should NOT validate an empty model instance", () => {
         let model = new Model();
-        assert(!validate(model));
+        validate(model).then(error => assert.isNotNull(error)).catch(() => {});
     });
 
     it("should validate a populated model instance", () => {
@@ -18,12 +18,12 @@ export default function() {
         model.id = 123456789;
         model.name = "NAME";
 
-        assert(validate(model));
+        validate(model).then(error => assert.isNull(error)).catch(() => {});
     });
 
     it("should NOT validate an empty object instance", () => {
         let model = {};
-        assert(!validate(model, "Model"));
+        validate(model, Model).then(error => assert.isNotNull(error)).catch(() => {});
     });
 
     it("should validate a populated object instance", () => {
@@ -32,7 +32,7 @@ export default function() {
             name: "NAME"
         };
 
-        assert(validate(model, "Model"));
+        validate(model, Model).then(error => assert.isNull(error)).catch(() => {});
     });
 
     it("should NOT validate a populated object instance without an explicit type", () => {
@@ -41,8 +41,8 @@ export default function() {
             name: "NAME"
         };
 
-        expect(() => {
-            validate(model)
-        }).to.throw("The model Object does not exist");
+        validate(model).then(() => {}).catch(error => {
+            assert.equal(error.message, "The model Object does not exist");
+        });
     });
 }

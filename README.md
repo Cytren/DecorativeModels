@@ -21,11 +21,9 @@ class User {
 let user = new User();
 user.name = "User Name";
  
-if (validate(user)) {
-    console.log("Valid!");
-} else {
-    console.log("Invalid!");
-}
+validate(user).then(error => {
+    console.log(error == null ? "Valid!" : "Invalid!");
+});
 ```
 
 ## Process Options
@@ -165,26 +163,12 @@ value: string;
 ```
 
 ## Validation
-The ```validate()``` function has many signatures to allow for more control over
-the validation process.
+The ```validate()``` function handles all validation of models, using promises to return the result. 
+The promise is resolved even when the validation has failed. The only time the promise will be rejected,
+is when either an internal error occurs, or incorrect data has been passed into the validation.
 
-### Result
-The result of the validation can be handled by the returned
-boolean, or for more information about potential validation errors, a processor
-function can be passed in.
-
-##### Boolean Result
 ```
-if (validate(myModel)) {
-    console.log("It Validated!");
-} else {
-    console.log("Error Validating!");
-}
-```
-
-##### Function Result
-```
-validate(myModel, (error) => {
+validate(myModel).then(error => {
     if (!error) {
         console.log("It Validated!");
     } else {
@@ -200,16 +184,12 @@ The validate function supports batch model validations, simply pass in an array
 of the models you want to validate.
 
 ```
-validate([model1, model2]);
-```
-OR
-```
-validate([model1, model2], (error) => {});
+validate([model1, model2], error => console.log(error));
 ```
 
 ### Conformity Validation
 Any object can be validated for model conformity, not only true instances of the
-class. When validating another object, the name of the model must be given in order
+class. When validating another object, the type of the model must be given in order
 to know which model to validate against.
 
 ```
@@ -218,20 +198,20 @@ class MyModel {
     value: string;
 }
  
-let model1 = new MyModel();
+let modelOne = new MyModel();
 model1.value = "STRING";
  
-let model2 = {
+let modelTwo = {
     value: "STRING"
 };
  
-console.log(validate(model1));              // true
-console.log(validate(model2, "MyModel"));   // true
+validate(modelOne).then(error => console.log(error));              // validates
+validate(modelTwo, MyModel).then(error => console.log(error));     // validates
 ```
 
 One important thing to note however, is that in order for the conformity validation
 to register, at least one instance of the class must be created. In this case, if the
-model1 instance had not have been created first, the model2 validation would fail.
+modelOne instance had not have been created first, the modelTwo validation would fail.
 
 ## Contribution
 If you find Decorative Models useful and would like to contribute to the development,
