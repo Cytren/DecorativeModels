@@ -4,12 +4,12 @@ import {validate, type} from "../../main/index";
 
 export default function() {
     describe("Model with a model property", () => {
-        class ParentModel {
-            @type("ChildModel") property: any;
-        }
-
         class ChildModel {
             @type("any") property: any;
+        }
+
+        class ParentModel {
+            @type(ChildModel) property: any;
         }
 
         it("should NOT validate with an undefined property", () => {

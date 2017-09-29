@@ -3,7 +3,7 @@ import {manager} from "../manager/manager";
 import {ValidateError} from "../manager/validate";
 import {read, EntityType, PrimitiveType, CollectionType, ArrayType, SetType, MapType} from "../io/type-reader";
 
-export function type(type: string): PropertyDecorator {
+export function type(type: string | Function): PropertyDecorator {
     return manager
         .register("type")
         .priority(0)

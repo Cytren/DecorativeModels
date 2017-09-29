@@ -20,7 +20,11 @@ export class MapType implements CollectionType {
     constructor (public keyType: EntityType, public valueType: EntityType) {}
 }
 
-export function read(type: string): EntityType {
+export function read(type: string | Function): EntityType {
+    if (type instanceof Function) {
+        return type.name;
+    }
+
     return readType(0, type)[1];
 }
 
