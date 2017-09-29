@@ -64,12 +64,17 @@ options(processOptions);
 Properties can be bound to a primitive type, collection type or another model.
 
 ```
+import YetAnotherModel from "./yet-another-model";
+ 
 class MyModel {
     @type("string")
     primitive: string;
     
     @type("AnotherModel")
     model: AnotherModel;
+    
+    @type(YetAnotherModel)
+    model: YetAnotherModel;
     
     @type("<AnotherModel>")
     collection: Set<AnotherModel>;
